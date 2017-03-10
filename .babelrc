@@ -1,0 +1,21 @@
+{
+  "presets": ["es2015", "stage-0", "react"],
+  "plugins": ["add-module-exports", "transform-async-to-generator"],
+  "env": {
+    "production": {
+      "presets": ["react-optimize"],
+      "plugins": [
+        "babel-plugin-dev-expression",
+		"transform-async-to-generator"
+      ]
+    },
+    "development": {
+      "presets": ["react-hmre"]
+    },
+    "test": {
+      "plugins": [
+        ["webpack-loaders", { "config": "webpack.config.test.js", "verbose": false }]
+      ]
+    }
+  }
+}

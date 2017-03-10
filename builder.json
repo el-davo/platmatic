@@ -1,0 +1,9 @@
+{
+  "win": {
+    "title": "cf-live-monitor",
+    "version": "0.0.1",
+    "publisher": "el-davo",
+    "icon": "app/img/favicon.ico",
+    "verbosity": 1
+  }
+}

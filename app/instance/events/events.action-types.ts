@@ -1,0 +1,3 @@
+export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const CANCEL_EVENTS = 'CANCEL_EVENTS';
+export const UPDATE_EVENTS = 'UPDATE_EVENTS';

@@ -1,0 +1,4 @@
+export const FETCH_SPACES = 'FETCH_SPACES';
+export const FETCH_SPACE_SUMMARY = 'FETCH_SPACE_SUMMARY';
+export const UPDATE_SPACES = 'UPDATE_SPACES';
+export const CLEAR_SPACES = 'CLEAR_SPACES';
