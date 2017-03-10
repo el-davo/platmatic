@@ -38,7 +38,7 @@ npm run test-watch
 npm run lint
 ```
 
-### Builing
+### Building
 
 #### Windows
 
