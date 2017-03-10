@@ -1,6 +1,6 @@
 {
-  "name": "cf-live-monitor",
-  "productName": "cf-live-monitor",
+  "name": "platmatic",
+  "productName": "platmatic",
   "version": "0.0.1",
   "description": "Desktop application for interacting with cloud foundry",
   "main": "main.js",
@@ -20,8 +20,8 @@
     "package": "cross-env NODE_ENV=production node -r babel-register -r babel-polyfill package.js --asar=true",
     "package:all": "npm run package -- --all",
     "package:win": "npm run package -- --win",
-    "installer:win": "electron-builder \"release/win32-x64/cf-live-monitor-win32-x64\" --platform=win --out=\"release\" --config=builder.json",
-    "installer:mac": "electron-installer-dmg \"release/darwin-x64/cf-live-monitor-darwin-x64\" cf-live-monitor"
+    "installer:win": "electron-builder \"release/win32-x64/platmatic-win32-x64\" --platform=win --out=\"release\" --config=builder.json",
+    "installer:mac": "electron-installer-dmg \"release/darwin-x64/platmatic-darwin-x64\" platmatic"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
