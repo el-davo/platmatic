@@ -2,7 +2,7 @@
 
 A desktop application written in electron and react for interacting with cloud foundry
 
-[logo]: ./demo/demo.gif "Logo Title Text 2"
+![Platmatic](./demo/demo.gif)
 
 ## Features
 
