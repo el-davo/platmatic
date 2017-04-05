@@ -2,6 +2,8 @@
 
 A desktop application written in electron and react for interacting with cloud foundry
 
+![Platmatic](./demo/demo.gif)
+
 ## Features
 
 * Search functionality (Search for apps or third party services)
@@ -38,7 +40,7 @@ npm run test-watch
 npm run lint
 ```
 
-### Builing
+### Building
 
 #### Windows
 
