@@ -11,7 +11,7 @@ import {
   RESPOND_TO_COMMAND
 } from './ssh.action-types';
 
-export function requestLoginSSH(app, appInstance) {
+export function requestLoginSSH(app: any, appInstance: number) {
   return {type: REQUEST_LOGIN_SSH, app, appInstance};
 }
 

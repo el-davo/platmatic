@@ -8,8 +8,9 @@ export const appStats = {
     stats: <stats>{},
     summary: <summary>{},
     serviceBinding: [],
-    environmentVariables: {}
-}
+    environmentVariables: {},
+    app: {}
+};
 
 export interface appStatsState {
 	isFetchingAppStats: boolean;
@@ -20,4 +21,5 @@ export interface appStatsState {
     summary?: summary;
     serviceBinding: Array<any>;
     environmentVariables: any;
+    app: any;
 }

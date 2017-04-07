@@ -43,7 +43,7 @@ const style = {
 
 interface props {
 	ssh: any;
-	requestLoginSSH(app, appInstance);
+	requestLoginSSH(app: any, appInstance: number);
 	registerCallbackListener(callback);
 	sendCommand(command: string);
 	requestChangeInstance(appInstance: number);

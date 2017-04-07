@@ -18,7 +18,7 @@ interface props {
 	app: any;
 	startApp(app: any);
 	stopApp(app: any);
-	requestLoginSSH(app: any, instance: number);
+	requestLoginSSH(appGuid: any, instance: number);
 	requestLogStream(app: any);
 	requestDeleteApp(app: any);
 }
