@@ -1,5 +1,5 @@
 import * as WebRequest from 'web-request';
-import { settings } from '../settings/settings.interface';
+import {settings} from '../settings/settings.interface';
 
 export function fetchAppsInSpace(settings: settings, guid: string, apps) {
 	return WebRequest.json(`${settings.cfInstance}/v2/spaces/${guid}/apps`, {
@@ -12,6 +12,16 @@ export function fetchAppsInSpace(settings: settings, guid: string, apps) {
 			page: apps.page,
 			'results-per-page': apps.resultsPerPage
 		}
+	});
+}
+
+export function fetchApp(settings, guid) {
+	return WebRequest.json(`${settings.cfInstance}/v2/apps/${guid}`, {
+		headers: {
+			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+		},
+		throwResponseError: true,
+		strictSSL: false
 	});
 }
 
@@ -32,7 +42,7 @@ export function startApp(settings: settings, guid) {
 		},
 		throwResponseError: true,
 		strictSSL: false,
-		form: JSON.stringify({ state: 'STARTED' })
+		form: JSON.stringify({state: 'STARTED'})
 	});
 }
 
@@ -43,7 +53,7 @@ export function stopApp(settings, guid) {
 		},
 		throwResponseError: true,
 		strictSSL: false,
-		form: JSON.stringify({ state: 'STOPPED' })
+		form: JSON.stringify({state: 'STOPPED'})
 	});
 }
 
@@ -75,7 +85,7 @@ export function scaleApp(settings: settings, guid: string, instances: number, me
 		},
 		throwResponseError: true,
 		strictSSL: false,
-		form: JSON.stringify({ instances, memory, disk_quota: disk })
+		form: JSON.stringify({instances, memory, disk_quota: disk})
 	});
 }
 
