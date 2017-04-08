@@ -17,6 +17,7 @@ interface props {
 	closeScaleDialog();
 	requestScaleApp(guid: string, instances: number, memory: number, disk: number);
 	requestLoginSSH(app: App, appInstance: number);
+	requestLogStream(app: App);
 	startApp(guid: string);
 	stopApp(guid: string);
 }
@@ -33,6 +34,7 @@ export class AppStatsCardComponent extends React.Component<props, any> {
 
 		this._openScaleModal = this._openScaleModal.bind(this);
 		this._requestLoginSSH = this._requestLoginSSH.bind(this);
+		this._requestLogStream = this._requestLogStream.bind(this);
 		this._openConfirmStartDialog = this._openConfirmStartDialog.bind(this);
 		this._openConfirmStopDialog = this._openConfirmStopDialog.bind(this);
 		this._closeConfirmStartDialog = this._closeConfirmStartDialog.bind(this);
@@ -47,6 +49,10 @@ export class AppStatsCardComponent extends React.Component<props, any> {
 
 	_requestLoginSSH() {
 		this.props.requestLoginSSH(this.props.appStats.app, 0);
+	}
+
+	_requestLogStream() {
+		this.props.requestLogStream(this.props.appStats.app);
 	}
 
 	_openConfirmStartDialog() {
@@ -134,6 +140,7 @@ export class AppStatsCardComponent extends React.Component<props, any> {
 					<CardActions>
 						<FlatButton primary={true} label="Scale" onTouchTap={this._openScaleModal}/>
 						<FlatButton primary={true} label="SSH" onTouchTap={this._requestLoginSSH}/>
+						<FlatButton primary={true} label="Logs" onTouchTap={this._requestLogStream}/>
 						{
 							this.props.appStats.app.entity.state === 'STARTED' ? (
 									<FlatButton primary={true} label="Stop" onTouchTap={this._openConfirmStopDialog}/>

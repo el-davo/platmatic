@@ -8,6 +8,7 @@ import {BoundServicesComponent} from './services/bound-services.component';
 import {PortsCardComponent} from './ports/ports-card.component';
 import {UserEnvironmentVariablesCardComponent} from './environment-variables/user-environment-variables-card.component';
 import {SystemEnvironmentVariablesCardComponent} from './environment-variables/system-environment-variables-card.component';
+import {App} from '../../cloud/apps/app.interface';
 
 interface props {
 	appStats: any;
@@ -19,6 +20,7 @@ interface props {
 	closeScaleDialog();
 	requestScaleApp(guid: string, instances: number, memory: number, disk: number);
 	requestLoginSSH(app: any, appInstance: number);
+	requestLogStream(app: App)
 	startApp(guid: string);
 	stopApp(guid: string);
 }
@@ -61,6 +63,7 @@ export class AppStatsComponent extends React.Component<props, any> {
 																					 closeScaleDialog={this.props.closeScaleDialog}
 																					 requestScaleApp={this.props.requestScaleApp}
 																					 requestLoginSSH={this.props.requestLoginSSH}
+																					 requestLogStream={this.props.requestLogStream}
 																					 startApp={this.props.startApp}
 																					 stopApp={this.props.stopApp}/>
 									</Col>
