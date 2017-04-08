@@ -19,6 +19,8 @@ interface props {
 	closeScaleDialog();
 	requestScaleApp(guid: string, instances: number, memory: number, disk: number);
 	requestLoginSSH(app: any, appInstance: number);
+	startApp(guid: string);
+	stopApp(guid: string);
 }
 
 export class AppStatsComponent extends React.Component<props, any> {
@@ -50,6 +52,7 @@ export class AppStatsComponent extends React.Component<props, any> {
 			<div>
 				{
 					!this.props.appStats.isFetchingAppStats ? (
+
 							<Grid fluid style={{ padding: 0 }}>
 								<Row>
 									<Col xs={12} md={12} lg={12}>
@@ -57,33 +60,79 @@ export class AppStatsComponent extends React.Component<props, any> {
 																					 openScaleDialog={this.props.openScaleDialog}
 																					 closeScaleDialog={this.props.closeScaleDialog}
 																					 requestScaleApp={this.props.requestScaleApp}
-																					 requestLoginSSH={this.props.requestLoginSSH}/>
-									</Col>
-								</Row>
-
-								<br />
-
-								<Row>
-									<Col xs={12} md={12} lg={6}>
-										<AppMemoryChartComponent appStats={this.props.appStats}
-																						 guid={this.props.guid}/>
-										<br />
-									</Col>
-									<Col xs={12} md={12} lg={6}>
-										<AppCpuChartComponent appStats={this.props.appStats}
-																					guid={this.props.guid}/>
-										<br />
+																					 requestLoginSSH={this.props.requestLoginSSH}
+																					 startApp={this.props.startApp}
+																					 stopApp={this.props.stopApp}/>
 									</Col>
 								</Row>
 
 								{
-									(this.props.appStats.summary.services || []).length > 0 ? (
+									this.props.appStats.app.entity.state === 'STARTED' ? (
 											<div>
+												<br />
+
 												<Row>
-													<Col xs={12} md={12} lg={12}>
-														<BoundServicesComponent appStats={this.props.appStats}/>
+													<Col xs={12} md={12} lg={6}>
+														<AppMemoryChartComponent appStats={this.props.appStats}
+																										 guid={this.props.guid}/>
+														<br />
+													</Col>
+													<Col xs={12} md={12} lg={6}>
+														<AppCpuChartComponent appStats={this.props.appStats}
+																									guid={this.props.guid}/>
+														<br />
 													</Col>
 												</Row>
+
+												{
+													(this.props.appStats.summary.services || []).length > 0 ? (
+															<div>
+																<Row>
+																	<Col xs={12} md={12} lg={12}>
+																		<BoundServicesComponent appStats={this.props.appStats}/>
+																	</Col>
+																</Row>
+																<br />
+															</div>
+														) : (
+															<div />
+														)
+												}
+
+												<Row>
+													<Col xs={12} md={12} lg={12}>
+														<UserEnvironmentVariablesCardComponent appGuid={this.props.guid}
+																																	 environmentVariables={this.props.appStats.environmentVariables}/>
+													</Col>
+												</Row>
+
+												<br />
+
+												<Row>
+													<Col xs={12} md={12} lg={12}>
+														<SystemEnvironmentVariablesCardComponent appGuid={this.props.guid}
+																																		 environmentVariables={this.props.appStats.environmentVariables}/>
+													</Col>
+												</Row>
+
+												<br />
+
+												{
+													(this.props.appStats.summary.ports || []).length > 0 ? (
+															<div>
+																<Row>
+																	<Col xs={12} md={12} lg={12}>
+																		<PortsCardComponent ports={this.props.appStats.summary.ports || []}/>
+																	</Col>
+																</Row>
+
+																<br />
+															</div>
+														) : (
+															<div />
+														)
+												}
+
 												<br />
 											</div>
 										) : (
@@ -91,41 +140,6 @@ export class AppStatsComponent extends React.Component<props, any> {
 										)
 								}
 
-								<Row>
-									<Col xs={12} md={12} lg={12}>
-										<UserEnvironmentVariablesCardComponent appGuid={this.props.guid}
-																													 environmentVariables={this.props.appStats.environmentVariables}/>
-									</Col>
-								</Row>
-
-								<br />
-
-								<Row>
-									<Col xs={12} md={12} lg={12}>
-										<SystemEnvironmentVariablesCardComponent appGuid={this.props.guid}
-																														 environmentVariables={this.props.appStats.environmentVariables}/>
-									</Col>
-								</Row>
-
-								<br />
-
-								{
-									(this.props.appStats.summary.ports || []).length > 0 ? (
-											<div>
-												<Row>
-													<Col xs={12} md={12} lg={12}>
-														<PortsCardComponent ports={this.props.appStats.summary.ports || []}/>
-													</Col>
-												</Row>
-
-												<br />
-											</div>
-										) : (
-											<div />
-										)
-								}
-
-								<br />
 							</Grid>
 						) : (
 							<div style={{ height: 150, textAlign: 'center' }}>

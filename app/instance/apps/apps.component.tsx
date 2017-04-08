@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Link } from 'react-router';
-import { Card, CardText } from 'material-ui/Card';
-import { Table, Column, Cell } from 'fixed-data-table-2';
-import { green600, red600 } from 'material-ui/styles/colors';
+import {Link} from 'react-router';
+import {Card, CardText} from 'material-ui/Card';
+import {Table, Column, Cell} from 'fixed-data-table-2';
+import {green600, red600} from 'material-ui/styles/colors';
 import StatusIcon from 'material-ui/svg-icons/av/fiber-manual-record';
 import AppsPaginationContainer from './apps-pagination.container';
 import AppOptionsContainer from './app-options.container';
-import { LoadingComponent } from '../../common/loading.component';
-import { AppsEmptyComponent } from './apps-empty.component';
+import {LoadingComponent} from '../../common/loading.component';
+import {AppsEmptyComponent} from './apps-empty.component';
 
 const styles = {
 	status: {
@@ -46,7 +46,7 @@ export class AppsComponent extends React.Component<props, any> {
 
 		this._setTableWidth();
 
-		this.setState({ intervalId: intervalId });
+		this.setState({intervalId: intervalId});
 	}
 
 	componentWillUnmount() {
@@ -56,11 +56,11 @@ export class AppsComponent extends React.Component<props, any> {
 	}
 
 	_handleResize() {
-		this.setState({ tableWidth: document.getElementById('table-container').offsetWidth - 30 });
+		this.setState({tableWidth: document.getElementById('table-container').offsetWidth - 30});
 	}
 
 	_setTableWidth() {
-		this.setState({ tableWidth: document.getElementById('table-container').offsetWidth - 30 });
+		this.setState({tableWidth: document.getElementById('table-container').offsetWidth - 30});
 	}
 
 	_getData() {
@@ -73,72 +73,66 @@ export class AppsComponent extends React.Component<props, any> {
 				<CardText id="table-container" style={{ height: 525 }}>
 					{
 						this.props.apps.result.resources.length > 0 ? (
-							<Table
-								rowsCount={this.props.apps.result.resources.length}
-								rowHeight={30}
-								headerHeight={30}
-								width={this.state.tableWidth}
-								height={450}>
-								<Column
-									header={<Cell>State</Cell>}
-									cell={props => (
+								<Table
+									rowsCount={this.props.apps.result.resources.length}
+									rowHeight={30}
+									headerHeight={30}
+									width={this.state.tableWidth}
+									height={450}>
+									<Column
+										header={<Cell>State</Cell>}
+										cell={props => (
 										<StatusIcon style={styles.status}
 											color={this.props.apps.result.resources[props.rowIndex].entity.state === 'STARTED' ? green600 : red600} />
 									)}
-									width={75}
-								/>
-								<Column
-									header={<Cell>Name</Cell>}
-									cell={props => (
+										width={75}
+									/>
+									<Column
+										header={<Cell>Name</Cell>}
+										cell={props => (
 										<Cell {...props}>
-											{
-												this.props.apps.result.resources[props.rowIndex].entity.state === 'STARTED' ? (
 													<Link
 														to={`/organizations/${this.props.organization_guid}/spaces/${this.props.space_guid}/apps/${this.props.apps.result.resources[props.rowIndex].metadata.guid}/stats`}>
 														{this.props.apps.result.resources[props.rowIndex].entity.name}
 													</Link>
-												) : (
-														<span>{this.props.apps.result.resources[props.rowIndex].entity.name}</span>
-													)
-											}
 										</Cell>
 									)}
-									width={100}
-									flexGrow={2}
-								/>
-								<Column
-									header={<Cell>Buildpack</Cell>}
-									cell={props => (
+										width={100}
+										flexGrow={2}
+									/>
+									<Column
+										header={<Cell>Buildpack</Cell>}
+										cell={props => (
 										<Cell {...props}>
 											{this.props.apps.result.resources[props.rowIndex].entity.buildpack || this.props.apps.result.resources[props.rowIndex].entity.detected_buildpack}
 										</Cell>
 									)}
-									width={100}
-									flexGrow={2}
-								/>
-								<Column
-									header={<Cell>Instances</Cell>}
-									cell={props => (
+										width={100}
+										flexGrow={2}
+									/>
+									<Column
+										header={<Cell>Instances</Cell>}
+										cell={props => (
 										<Cell {...props}>
 											{this.props.apps.result.resources[props.rowIndex].entity.instances}
 										</Cell>
 									)}
-									width={100}
-								/>
-								<Column
-									header={<Cell></Cell>}
-									cell={props => (
+										width={100}
+									/>
+									<Column
+										header={<Cell></Cell>}
+										cell={props => (
 										<AppOptionsContainer app={this.props.apps.result.resources[props.rowIndex]} />
 									)}
-									width={50}
-								/>
-							</Table>
-						) : (
+										width={50}
+									/>
+								</Table>
+							) : (
 								<div style={{ height: 450, textAlign: 'center' }}>
 									{
-										this.props.apps.isFetchingApps  ? (
-											<LoadingComponent />
-										) : (
+										this.props.apps.isFetchingApps ? (
+												<LoadingComponent />
+											) : (
 												<AppsEmptyComponent />
 											)
 									}
@@ -147,7 +141,7 @@ export class AppsComponent extends React.Component<props, any> {
 					}
 					<br />
 
-					<AppsPaginationContainer space_guid={this.props.space_guid} />
+					<AppsPaginationContainer space_guid={this.props.space_guid}/>
 				</CardText>
 			</Card>
 		)

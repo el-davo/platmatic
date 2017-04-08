@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/FlatButton';
+import {App} from '../../cloud/apps/app.interface';
 
 const styles = {
 	options: {
@@ -15,12 +16,12 @@ const styles = {
 };
 
 interface props {
-	app: any;
-	startApp(app: any);
-	stopApp(app: any);
+	app: App;
+	startApp(guid: string);
+	stopApp(guid: string);
 	requestLoginSSH(appGuid: any, instance: number);
-	requestLogStream(app: any);
-	requestDeleteApp(app: any);
+	requestLogStream(app: App);
+	requestDeleteApp(app: App);
 }
 
 export class AppOptionsComponent extends React.Component<props, any> {

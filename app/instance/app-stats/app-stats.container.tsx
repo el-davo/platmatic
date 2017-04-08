@@ -25,6 +25,8 @@ interface actions {
 	closeScaleDialog();
 	requestScaleApp(guid: string, instances: number, memory: number, disk: number);
 	requestLoginSSH(app: any, appInstance: number);
+	startApp(guid: string);
+	stopApp(guid: string);
 }
 
 const AppStatsContainer: React.StatelessComponent<props> = props => {
@@ -41,7 +43,9 @@ const AppStatsContainer: React.StatelessComponent<props> = props => {
 												 openScaleDialog={props.actions.openScaleDialog}
 												 closeScaleDialog={props.actions.closeScaleDialog}
 												 requestScaleApp={props.actions.requestScaleApp}
-												 requestLoginSSH={props.actions.requestLoginSSH}/>
+												 requestLoginSSH={props.actions.requestLoginSSH}
+												 startApp={props.actions.startApp}
+												 stopApp={props.actions.stopApp}/>
 		</div>
 	);
 };
