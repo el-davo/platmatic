@@ -6,7 +6,9 @@ import {AppStatsComponent} from './app-stats.component';
 import * as statsActions from './app-stats.actions';
 import * as appsActions from '../apps/apps.actions';
 import * as sshActions from '../ssh/ssh.actions';
+import * as logsActions from '../logs/logs.actions';
 import {appStatsState} from './app-stats.state';
+import {App} from '../../cloud/apps/app.interface';
 
 interface props {
 	appStats: appStatsState;
@@ -24,7 +26,8 @@ interface actions {
 	openScaleDialog();
 	closeScaleDialog();
 	requestScaleApp(guid: string, instances: number, memory: number, disk: number);
-	requestLoginSSH(app: any, appInstance: number);
+	requestLoginSSH(app: App, appInstance: number);
+	requestLogStream(app: App)
 	startApp(guid: string);
 	stopApp(guid: string);
 }
@@ -44,6 +47,7 @@ const AppStatsContainer: React.StatelessComponent<props> = props => {
 												 closeScaleDialog={props.actions.closeScaleDialog}
 												 requestScaleApp={props.actions.requestScaleApp}
 												 requestLoginSSH={props.actions.requestLoginSSH}
+												 requestLogStream={props.actions.requestLogStream}
 												 startApp={props.actions.startApp}
 												 stopApp={props.actions.stopApp}/>
 		</div>
@@ -61,7 +65,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: bindActionCreators({...statsActions, ...appsActions, ...sshActions}, dispatch)
+		actions: bindActionCreators({...statsActions, ...appsActions, ...sshActions, ...logsActions}, dispatch)
 	};
 }
 

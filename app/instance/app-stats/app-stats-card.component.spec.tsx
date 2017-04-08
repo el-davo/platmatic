@@ -17,6 +17,7 @@ describe('App stats card component', () => {
 	let closeScaleDialog;
 	let requestScaleApp;
 	let requestLoginSSH;
+	let requestLogStream;
 	let startApp;
 	let stopApp;
 
@@ -42,6 +43,7 @@ describe('App stats card component', () => {
 		closeScaleDialog = spy();
 		requestScaleApp = spy();
 		requestLoginSSH = spy();
+		requestLogStream = spy();
 		startApp = spy();
 		stopApp = spy();
 
@@ -51,6 +53,7 @@ describe('App stats card component', () => {
 			closeScaleDialog={closeScaleDialog}
 			requestScaleApp={requestScaleApp}
 			requestLoginSSH={requestLoginSSH}
+			requestLogStream={requestLogStream}
 			startApp={startApp}
 			stopApp={stopApp}/>);
 	});
@@ -72,7 +75,7 @@ describe('App stats card component', () => {
 		});
 
 		it('should have the correct amount of actions', () => {
-			wrapper.find(CardActions).find(FlatButton).should.have.length(3);
+			wrapper.find(CardActions).find(FlatButton).should.have.length(4);
 		});
 
 		it('should have a scale button', () => {
@@ -81,6 +84,10 @@ describe('App stats card component', () => {
 
 		it('should have an ssh button', () => {
 			wrapper.find(CardActions).find({label: 'SSH'}).should.have.length(1);
+		});
+
+		it('should have a logs button', () => {
+			wrapper.find(CardActions).find({label: 'Logs'}).should.have.length(1);
 		});
 
 		it('should have a stop app button when the app is started', () => {
@@ -106,6 +113,7 @@ describe('App stats card component', () => {
 				closeScaleDialog={closeScaleDialog}
 				requestScaleApp={requestScaleApp}
 				requestLoginSSH={requestLoginSSH}
+				requestLogStream={requestLogStream}
 				startApp={startApp}
 				stopApp={stopApp}/>);
 
@@ -121,6 +129,13 @@ describe('App stats card component', () => {
 
 			requestLoginSSH.calledOnce.should.be.true();
 			requestLoginSSH.calledWith(appStats.app, 0).should.be.true();
+		});
+
+		it('should open the logs screen when the logs button is clicked', () => {
+			wrapper.find(CardActions).find({label: 'Logs'}).simulate('touchTap');
+
+			requestLogStream.calledOnce.should.be.true();
+			requestLogStream.calledWith(appStats.app).should.be.true();
 		});
 	});
 });
