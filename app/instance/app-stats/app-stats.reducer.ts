@@ -1,10 +1,10 @@
-import initialState from '../../initialState';
 import {appStats, appStatsState} from './app-stats.state';
 import {summary, stats} from '../../cloud/app-stats/app-stats.interface';
 import {
 	FETCH_APP_STATS,
 	REFRESH_APP_STATS,
 	UPDATE_APP_STATS,
+	UPDATE_APP_DATA,
 	UPDATE_APP_STATS_MEM_CPU,
 	CLEAR_STATS,
 	OPEN_SCALE_DIALOG,
@@ -30,6 +30,8 @@ export function appStatsReducer(state: appStatsState = appStats, action): appSta
 				isFetchingAppStats: false,
 				isRefreshingAppStats: false
 			};
+		case UPDATE_APP_DATA:
+			return {...state, app: action.app};
 		case UPDATE_APP_STATS_MEM_CPU:
 			return {
 				...state,

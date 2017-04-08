@@ -2,6 +2,7 @@ import {
 	FETCH_APP_STATS,
 	REFRESH_APP_STATS,
 	UPDATE_APP_STATS,
+	UPDATE_APP_DATA,
 	UPDATE_APP_STATS_MEM_CPU,
 	CLEAR_STATS,
 	OPEN_SCALE_DIALOG,
@@ -20,6 +21,10 @@ export function refreshAppStats(guid) {
 
 export function updateAppStats(stats, summary, serviceBindings, environmentVariables, app) {
 	return {type: UPDATE_APP_STATS, stats, summary, serviceBindings, environmentVariables, app}
+}
+
+export function updateAppData(app) {
+	return {type: UPDATE_APP_DATA, app}
 }
 
 export function updateAppStatsMemCpu(memCpu) {

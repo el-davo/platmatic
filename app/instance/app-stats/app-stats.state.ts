@@ -1,7 +1,8 @@
 import {summary, stats} from '../../cloud/app-stats/app-stats.interface';
+import {App} from '../../cloud/apps/app.interface';
 
 export const appStats = {
-    isFetchingAppStats: false,
+    isFetchingAppStats: true,
     isRefreshingAppStats: false,
     isScalingApp: false,
     showScaleDialog: false,
@@ -9,7 +10,7 @@ export const appStats = {
     summary: <summary>{},
     serviceBinding: [],
     environmentVariables: {},
-    app: {}
+    app: {} as App
 };
 
 export interface appStatsState {
@@ -21,5 +22,5 @@ export interface appStatsState {
     summary?: summary;
     serviceBinding: Array<any>;
     environmentVariables: any;
-    app: any;
+    app: App;
 }

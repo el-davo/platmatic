@@ -21,7 +21,7 @@ A desktop application written in electron and react for interacting with cloud f
 ### Install
 
 ``
-npm install
+yarn
 ``
 
 ### Run in dev mode
