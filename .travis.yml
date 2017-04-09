@@ -5,11 +5,8 @@ matrix:
     - os: osx
       env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6
 
-    - os: osx
-      env: TEST_FILES=windows.*,mac.* NODE_VERSION=7
-
-    - os: osx
-      env: TEST_FILES=mac.* NODE_VERSION=6
+    - os: linux
+      env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6
 
 language: c
 
