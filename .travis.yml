@@ -38,9 +38,10 @@ script:
 - npm run test
 - npm run package:win
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run installer:mac; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then zip -r platmatic-linux.zip ./release/linux-x64; fi
 
 addons:
   artifacts:
     paths:
-    - $(ls ./release/*.zip | tr "\n" ":")
-    - $(ls ./*.dmg | tr "\n" ":")
+    - ./platmatic-linux.zip
+    - ./platmatic.dmg
