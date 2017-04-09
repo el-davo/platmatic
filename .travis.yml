@@ -42,5 +42,5 @@ script:
 addons:
   artifacts: true
 	paths:
-    - $(ls /release/*.zip | tr "\n" ":")
-    - $(ls /release/*.dmg | tr "\n" ":")
+    - $(ls ./release/*.zip | tr "\n" ":")
+    - $(ls ./release/*.dmg | tr "\n" ":")
