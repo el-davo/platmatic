@@ -8,9 +8,6 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
-  - $exePath = "$($env:USERPROFILE)\nsis-2.46-setup.exe"
-  - (New-Object Net.WebClient).DownloadFile('http://ufpr.dl.sourceforge.net/project/nsis/NSIS%202/2.46/nsis-2.46-setup.exe', $exePath)
-  - cmd /c start /wait $exePath /S /D=C:\nsis
   - npm install -g yarn electron-builder@2.1.1
   - set PATH=%APPDATA%\npm;%PATH%
   - yarn
