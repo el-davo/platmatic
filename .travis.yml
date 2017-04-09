@@ -1,8 +1,5 @@
 #osx_image: xcode8.3
 
-sudo: required
-dist: trusty
-
 matrix:
   include:
     - os: osx
@@ -38,5 +35,12 @@ install:
 
 script:
 - yarn
+- npm run test
 - npm run package:win
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run installer:mac; fi
+
+addons:
+  artifacts: true
+	paths:
+    - $(ls /release/*.zip | tr "\n" ":")
+    - $(ls /release/*.dmg | tr "\n" ":")
