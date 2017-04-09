@@ -8,6 +8,8 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
+  - 'appveyor DownloadFile "http://sunet.dl.sourceforge.net/project/nsis/NSIS 2/2.46/nsis-2.46-setup.exe" -FileName nsissetup.exe'
+  - 'nsissetup.exe /S /D=%NSIS_ROOT%'
   - '%NSIS_ROOT%\makensis'
   - npm install -g yarn electron-builder@2.1.1
   - set PATH=%APPDATA%\npm;%PATH%
