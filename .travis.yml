@@ -1,40 +1,43 @@
-sudo: false
+#osx_image: xcode8.3
 
-language: node_js
+matrix:
+  include:
+    - os: osx
+      env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6 PUBLISH_TO_NPM=true
 
-node_js:
-  - 6
-  - 5
-  - 4
+    - os: osx
+      env: TEST_FILES=windows.*,mac.* NODE_VERSION=7
+
+    - os: osx
+      env: TEST_FILES=mac.* NODE_VERSION=6
+
+language: c
 
 cache:
   directories:
     - node_modules
+    - packages/electron-builder/node_modules
+    - packages/electron-builder-util/node_modules
+    - $HOME/.electron
+    - /tmp/jest-electron-builder-tests
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
-      - icnsutils
-      - graphicsmagick
-      - xz-utils
-      - xorriso
+before_install:
+  - curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
+  - chmod +x /tmp/7za
+  - curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
+  - /tmp/7za x -o/usr/local/Cellar -y /tmp/wine.7z
+  - brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
+  - brew install freetype graphicsmagick
+  - git-lfs pull
 
 install:
-  - export CXX="g++-4.8"
-  - npm install
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
-
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start &
-  - sleep 3
+- nvm install $NODE_VERSION
+- nvm use --delete-prefix $NODE_VERSION
+- ln -sf $PWD/test/vendor/yarn.js /usr/local/bin/yarn
+- yarn --link-duplicates --pure-lockfile
+- if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" && "$AUTO_PUBLISH" != "false" && "$TRAVIS_TAG" == "" && "$PUBLISH_TO_NPM" == "true" ]]; then yarn add @develar/semantic-release@next --dev ; fi
 
 script:
-  - npm run lint
-  - npm run test
-  - npm run build
-  - npm run test-e2e
-  - npm run package
+- npm install -g electron-builder@2.1.1
+- yarn
+- npm run package:win

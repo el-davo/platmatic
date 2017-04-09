@@ -1,7 +1,7 @@
 {
   "name": "platmatic",
   "productName": "platmatic",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Desktop application for interacting with cloud foundry",
   "main": "main.js",
   "scripts": {
