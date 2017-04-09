@@ -36,6 +36,6 @@ install:
 - ln -sf $PWD/test/vendor/yarn.js /usr/local/bin/yarn
 
 script:
-- npm install -g electron-builder@2.1.1
+- npm install -g yarn electron-builder@2.1.1
 - yarn
 - npm run package:win
