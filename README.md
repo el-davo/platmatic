@@ -7,6 +7,12 @@ A desktop application written in electron and react for interacting with cloud f
 
 ![Platmatic](./demo/demo.gif)
 
+## Download
+
+You can download from the latest installers from the releases section
+
+https://github.com/el-davo/platmatic/releases
+
 ## Features
 
 * Search functionality (Search for apps or third party services)
