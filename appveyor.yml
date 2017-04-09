@@ -1,4 +1,4 @@
-os: unstable
+os: Visual Studio 2015
 cache:
   - node_modules
 environment:
@@ -8,7 +8,7 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
-  - '%NSIS_ROOT%\makensis'
+  - makensis
   - npm install -g yarn electron-builder@2.1.1
   - set PATH=%APPDATA%\npm;%PATH%
   - yarn
