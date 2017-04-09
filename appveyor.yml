@@ -9,7 +9,6 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
   - set PATH=%APPDATA%\npm;%PATH%;%NSIS_ROOT%
-  - makensis
   - npm install -g yarn electron-builder@2.1.1
   - yarn
 matrix:
