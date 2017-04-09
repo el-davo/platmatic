@@ -1,7 +1,7 @@
 # Platmatic
 
 [![Build Status](https://travis-ci.org/el-davo/platmatic.svg?branch=master)](https://travis-ci.org/el-davo/platmatic)
-[![Build Status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master)](https://ci.appveyor.com/project/el-davo/platmatic/branch/master)
+[![Build Status](https://ci.appveyor.com/api/projects/status/bsxjmg1wk4uksp9s/branch/master)](https://ci.appveyor.com/project/el-davo/platmatic/branch/master)
 
 A desktop application written in electron and react for interacting with cloud foundry
 
