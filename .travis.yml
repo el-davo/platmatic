@@ -33,6 +33,7 @@ install:
 
 script:
 - npm install -g yarn electron-builder@2.1.1
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm install -g electron-installer-dmg; fi
 - yarn
 - npm run package:win
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run installer:mac; fi
