@@ -1,5 +1,8 @@
 #osx_image: xcode8.3
 
+sudo: required
+dist: trusty
+
 matrix:
   include:
     - os: osx
@@ -7,6 +10,9 @@ matrix:
 
     - os: linux
       env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6
+
+    - os: linux
+      env: LAZ_VER=1.4.4  LAZ_ENV=wine WINEARCH=win64 LAZ_OPT="--os=win64 --cpu=x86_64"
 
 language: c
 
@@ -30,10 +36,10 @@ before_install:
 install:
 - nvm install $NODE_VERSION
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then nvm use --delete-prefix $NODE_VERSION; fi
-
-script:
 - npm install -g yarn electron-builder@2.1.1
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm install -g electron-installer-dmg; fi
+
+script:
 - yarn
 - npm run package:win
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run installer:mac; fi
