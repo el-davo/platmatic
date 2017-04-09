@@ -9,7 +9,7 @@ A desktop application written in electron and react for interacting with cloud f
 
 ## Download
 
-You can download from the latest installers from the releases section
+You can download the latest installers from the releases section
 
 https://github.com/el-davo/platmatic/releases
 
