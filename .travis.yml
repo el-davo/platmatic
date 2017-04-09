@@ -3,7 +3,7 @@
 matrix:
   include:
     - os: osx
-      env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6 PUBLISH_TO_NPM=true
+      env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6
 
     - os: osx
       env: TEST_FILES=windows.*,mac.* NODE_VERSION=7
@@ -34,7 +34,6 @@ install:
 - nvm install $NODE_VERSION
 - nvm use --delete-prefix $NODE_VERSION
 - ln -sf $PWD/test/vendor/yarn.js /usr/local/bin/yarn
-- yarn --link-duplicates --pure-lockfile
 
 script:
 - npm install -g electron-builder@2.1.1
