@@ -11,9 +11,6 @@ matrix:
     - os: linux
       env: TEST_FILES=BuildTest,extraMetadataTest,globTest,filesTest,ignoreTest,linux.* NODE_VERSION=6
 
-    - os: linux
-      env: LAZ_VER=1.4.4  LAZ_ENV=wine WINEARCH=win64 LAZ_OPT="--os=win64 --cpu=x86_64"
-
 language: c
 
 cache:
