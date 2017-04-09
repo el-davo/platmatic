@@ -35,7 +35,6 @@ install:
 - nvm use --delete-prefix $NODE_VERSION
 - ln -sf $PWD/test/vendor/yarn.js /usr/local/bin/yarn
 - yarn --link-duplicates --pure-lockfile
-- if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" && "$AUTO_PUBLISH" != "false" && "$TRAVIS_TAG" == "" && "$PUBLISH_TO_NPM" == "true" ]]; then yarn add @develar/semantic-release@next --dev ; fi
 
 script:
 - npm install -g electron-builder@2.1.1
