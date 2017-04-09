@@ -2,7 +2,7 @@ os: unstable
 cache:
   - node_modules
 environment:
-  NSIS_ROOT: C:\nsis
+  NSIS_ROOT: C:\Program Files (x86)\NSIS
   matrix:
     - nodejs_version: 6
 install:
