@@ -1,52 +1,59 @@
-import {
-  REQUEST_LOGIN,
-  LOGGED_IN,
-  REQUEST_LOGOUT,
-  LOGGED_OUT,
-  INVALID_LOGIN,
-  TOKEN_EXPIRED,
-  REFRESH_TOKEN,
-  TOKEN_REFRESHED,
-  REQUEST_GET_SETTINGS,
-  RETRIEVED_SETTINGS
-} from './settings.action-types';
+import * as actionTypes from './settings.action-types';
+import {Token} from '../cloud/user/token.interface';
+import {Settings, CfInstance} from './settings.interface';
 
-export function requestLogin(cfInstance, username, password) {
-  return {type: REQUEST_LOGIN, cfInstance, username, password};
+export function requestLogin(cfInstance: string, username: string, password: string) {
+	return {type: actionTypes.REQUEST_LOGIN, cfInstance, username, password};
 }
 
-export function loggedIn(cfInstance, token) {
-  return {type: LOGGED_IN, cfInstance, token};
+export function loggedIn(cfInstance: string, token: Token) {
+	return {type: actionTypes.LOGGED_IN, cfInstance, token};
 }
 
-export function requestLogout() {
-  return {type: REQUEST_LOGOUT};
+export function requestLogout(cfInstance: string) {
+	return {type: actionTypes.REQUEST_LOGOUT, cfInstance};
 }
 
-export function loggedOut() {
-  return {type: LOGGED_OUT};
+export function loggedOut(cfInstance: string) {
+	return {type: actionTypes.LOGGED_OUT, cfInstance};
 }
 
 export function invalidLogin() {
-  return {type: INVALID_LOGIN};
+	return {type: actionTypes.INVALID_LOGIN};
 }
 
-export function tokenExpired() {
-  return {type: TOKEN_EXPIRED};
+export function refreshToken(cfInstance: string) {
+	return {type: actionTypes.REFRESH_TOKEN, cfInstance}
 }
 
-export function refreshToken() {
-  return {type: REFRESH_TOKEN}
-}
-
-export function tokenRefreshed(token) {
-  return {type: TOKEN_REFRESHED, token};
+export function tokenRefreshed(cfInstance: string, token: Token) {
+	return {type: actionTypes.TOKEN_REFRESHED, cfInstance, token};
 }
 
 export function requestGetSettings() {
-  return {type: REQUEST_GET_SETTINGS};
+	return {type: actionTypes.REQUEST_GET_SETTINGS};
 }
 
-export function retrievedSettings(settings) {
-  return {type: RETRIEVED_SETTINGS, settings};
+export function retrievedSettings(settings: Settings) {
+	return {type: actionTypes.RETRIEVED_SETTINGS, settings};
+}
+
+export function openAddCfInstanceDialog() {
+	return {type: actionTypes.OPEN_ADD_CF_INSTANCE_DIALOG};
+}
+
+export function closeCfInstanceDialog() {
+	return {type: actionTypes.CLOSE_ADD_CF_INSTANCE_DIALOG};
+}
+
+export function addCfInstance(cfInstance: string, username: string, password: string) {
+	return {type: actionTypes.ADD_CF_INSTANCE, cfInstance, username, password};
+}
+
+export function addCfInstanceSuccess(cfInstance: CfInstance) {
+	return {type: actionTypes.ADD_CF_INSTANCE_SUCCESS, cfInstance};
+}
+
+export function addCfInstanceFailed() {
+	return {type: actionTypes.ADD_CF_INSTANCE_FAILED};
 }
