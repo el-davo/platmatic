@@ -1,10 +1,5 @@
-import {Token} from '../cloud/user/token.interface';
+import {CfInstance} from './settings.state';
 
 export interface Settings {
-	cfInstances: CfInstance[]
-}
-
-export interface CfInstance {
-	cfInstance: string;
-	token: Token
+	cfInstances: CfInstance
 }

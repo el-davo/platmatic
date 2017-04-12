@@ -2,17 +2,6 @@ import {users} from './instance/users/users.state';
 import {appStats} from './instance/app-stats/app-stats.state';
 
 export default {
-	settings: {
-		isLoggedIn: false,
-		isLoggingIn: false,
-		isTokenExpired: false,
-		isReadingSettings: true,
-		isRefreshingToken: false,
-		isSettingsLoaded: false,
-		loginFailed: false,
-		cfInstance: null,
-		token: {}
-	},
 	organizations: {
 		isFetchingOrganizations: false,
 		isFetchingOrganizationSummary: false,

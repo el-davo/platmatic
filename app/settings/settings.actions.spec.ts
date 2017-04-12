@@ -1,7 +1,8 @@
 import * as actionTypes from './settings.action-types';
 import * as actions from './settings.actions';
 import {Token} from '../cloud/user/token.interface';
-import {Settings, CfInstance} from './settings.interface';
+import {Settings} from './settings.interface';
+import {CfInstance} from "./settings.state";
 
 describe('Settings actions', () => {
 
@@ -18,9 +19,8 @@ describe('Settings actions', () => {
 	});
 
 	it('should let the user know they logged in successfully', () => {
-		const cfInstance = 'run.lab.io';
-		const token = {access_token: 'abc123'} as Token;
-		actions.loggedIn(cfInstance, token).should.eql({type: actionTypes.LOGGED_IN, cfInstance, token});
+		const cfInstance = {'lab.run.io': {access_token: 'abc123'} as Token} as CfInstance;
+		actions.loggedIn(cfInstance).should.eql({type: actionTypes.LOGGED_IN, cfInstance});
 	});
 
 	it('should request that the user be logged out of a cf instance', () => {
@@ -43,9 +43,8 @@ describe('Settings actions', () => {
 	});
 
 	it('should alert the user that the token has been refreshed for a cf instance', () => {
-		const cfInstance = 'run.lab.io';
-		const token = {access_token: 'abc123'} as Token;
-		actions.tokenRefreshed(cfInstance, token).should.eql({type: actionTypes.TOKEN_REFRESHED, cfInstance, token});
+		const cfInstance = {'lab.run.io': {access_token: 'abc123'} as Token} as CfInstance;
+		actions.tokenRefreshed(cfInstance).should.eql({type: actionTypes.TOKEN_REFRESHED, cfInstance});
 	});
 
 	it('should load the settings from disk', () => {
@@ -53,7 +52,7 @@ describe('Settings actions', () => {
 	});
 
 	it('should alert the user that the settings have been retrieved', () => {
-		const settings = {cfInstances: [{cfInstance: 'lab.run.io'}]} as Settings;
+		const settings = {cfInstances: {'lab.run.io': {access_token: 'abc123'} as Token}} as Settings;
 		actions.retrievedSettings(settings).should.eql({type: actionTypes.RETRIEVED_SETTINGS, settings});
 	});
 
@@ -63,27 +62,6 @@ describe('Settings actions', () => {
 
 	it('should close the add cf instance dialog', () => {
 		actions.closeCfInstanceDialog().should.eql({type: actionTypes.CLOSE_ADD_CF_INSTANCE_DIALOG});
-	});
-
-	it('should request that a new cf instance be added', () => {
-		const cfInstance = 'lab.run.io';
-		const username = 'testUsername';
-		const password = 'testPassword';
-		actions.addCfInstance(cfInstance, username, password).should.eql({
-			type: actionTypes.ADD_CF_INSTANCE,
-			cfInstance,
-			username,
-			password
-		})
-	});
-
-	it('should alert the user that logging in to the new cf instance was a success', () => {
-		const cfInstance = {cfInstance: 'lab.run.io'} as CfInstance;
-		actions.addCfInstanceSuccess(cfInstance).should.eql({type: actionTypes.ADD_CF_INSTANCE_SUCCESS, cfInstance});
-	});
-
-	it('should alert the user that logging in to the new cf instance failed', () => {
-		actions.addCfInstanceFailed().should.eql({type: actionTypes.ADD_CF_INSTANCE_FAILED});
 	});
 
 });
