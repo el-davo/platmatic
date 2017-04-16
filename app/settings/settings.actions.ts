@@ -23,7 +23,7 @@ export function invalidLogin() {
 	return {type: actionTypes.INVALID_LOGIN};
 }
 
-export function refreshToken(cfInstance: string) {
+export function refreshToken(cfInstance: CfInstance) {
 	return {type: actionTypes.REFRESH_TOKEN, cfInstance}
 }
 

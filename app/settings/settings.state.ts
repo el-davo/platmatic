@@ -23,5 +23,10 @@ export interface SettingsState {
 }
 
 export interface CfInstance {
-	[key: string]: Token
+	[key: string]: Instance
+}
+
+export interface Instance {
+	token: Token;
+	primary: boolean;
 }

@@ -2,7 +2,7 @@ import * as actionTypes from './settings.action-types';
 import * as actions from './settings.actions';
 import {Token} from '../cloud/user/token.interface';
 import {Settings} from './settings.interface';
-import {CfInstance} from "./settings.state";
+import {CfInstance, Instance} from "./settings.state";
 
 describe('Settings actions', () => {
 
@@ -19,7 +19,7 @@ describe('Settings actions', () => {
 	});
 
 	it('should let the user know they logged in successfully', () => {
-		const cfInstance = {'lab.run.io': {access_token: 'abc123'} as Token} as CfInstance;
+		const cfInstance = {'lab.run.io': {token: {access_token: 'abc123'} as Token} as Instance} as CfInstance;
 		actions.loggedIn(cfInstance).should.eql({type: actionTypes.LOGGED_IN, cfInstance});
 	});
 
@@ -38,12 +38,12 @@ describe('Settings actions', () => {
 	});
 
 	it('should refresh the token for a cf instance', () => {
-		const cfInstance = 'run.lab.io';
+		const cfInstance = {'lab.run.io': {token: {access_token: 'abc123'} as Token} as Instance} as CfInstance;
 		actions.refreshToken(cfInstance).should.eql({type: actionTypes.REFRESH_TOKEN, cfInstance});
 	});
 
 	it('should alert the user that the token has been refreshed for a cf instance', () => {
-		const cfInstance = {'lab.run.io': {access_token: 'abc123'} as Token} as CfInstance;
+		const cfInstance = {'lab.run.io': {token: {access_token: 'abc123'} as Token} as Instance} as CfInstance;
 		actions.tokenRefreshed(cfInstance).should.eql({type: actionTypes.TOKEN_REFRESHED, cfInstance});
 	});
 
@@ -52,7 +52,7 @@ describe('Settings actions', () => {
 	});
 
 	it('should alert the user that the settings have been retrieved', () => {
-		const settings = {cfInstances: {'lab.run.io': {access_token: 'abc123'} as Token}} as Settings;
+		const settings = {cfInstances: {'lab.run.io': {token: {} as Token} as Instance}} as Settings;
 		actions.retrievedSettings(settings).should.eql({type: actionTypes.RETRIEVED_SETTINGS, settings});
 	});
 

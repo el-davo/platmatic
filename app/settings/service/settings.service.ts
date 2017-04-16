@@ -4,7 +4,7 @@ import {ensureDir} from 'fs-extra';
 import {readFile, writeFile}  from 'jsonfile';
 
 let homeDirectory = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
-let homeDir = join(homeDirectory, '.cf-live-monitor');
+let homeDir = join(homeDirectory, '.platmatic');
 let settingsFilePath = join(homeDir, 'settings.json');
 
 export function ensureSettingsDirectoryExists() {

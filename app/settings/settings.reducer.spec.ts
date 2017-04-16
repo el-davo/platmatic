@@ -1,5 +1,5 @@
 import * as actionTypes from './settings.action-types';
-import {settings, SettingsState, CfInstance} from './settings.state';
+import {settings, SettingsState, CfInstance, Instance} from './settings.state';
 import {settingsReducer, Action} from './settings.reducer';
 import {Token} from "../cloud/user/token.interface";
 
@@ -20,20 +20,23 @@ describe('Settings Reducer', () => {
 	it('should alert the user that the login attempt was a success', () => {
 		const action = {
 			type: actionTypes.LOGGED_IN,
-			cfInstance: {'lab.run.io': {access_token: '123abc'} as Token} as CfInstance
+			cfInstance: {'lab.run.io': {token: {access_token: '123abc'} as Token} as Instance} as CfInstance
 		} as Action;
 		const state = {
 			...settings,
 			isLoggingIn: true,
 			isLoggedIn: false,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token}
+			cfInstances: {'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance}
 		} as SettingsState;
 
 		settingsReducer(state, action).should.eql({
 			...state,
 			isLoggingIn: false,
 			isLoggedIn: true,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token, 'lab.run.io': {access_token: '123abc'} as Token}
+			cfInstances: {
+				'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance,
+				'lab.run.io': {token: {access_token: '123abc'} as Token} as Instance
+			}
 		} as SettingsState);
 	});
 
@@ -49,13 +52,16 @@ describe('Settings Reducer', () => {
 		const state = {
 			...settings,
 			isLoggingOut: true,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token, 'lab.run.io': {access_token: '123abc'} as Token}
+			cfInstances: {
+				'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance,
+				'lab.run.io': {token: {access_token: '123abc'} as Token} as Instance
+			}
 		} as SettingsState;
 
 		settingsReducer(state, action).should.eql({
 			...state,
 			isLoggingOut: false,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token}
+			cfInstances: {'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance}
 		} as SettingsState);
 	});
 
@@ -76,18 +82,24 @@ describe('Settings Reducer', () => {
 	it('should update the expired token with the new shiny token', () => {
 		const action = {
 			type: actionTypes.TOKEN_REFRESHED,
-			cfInstance: {'lab.run.io': {access_token: 'newToken'}}
+			cfInstance: {'lab.run.io': {token: {access_token: 'newToken'} as Token} as Instance}
 		} as Action;
 		const state = {
 			...settings,
 			isRefreshingToken: true,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token, 'lab.run.io': {access_token: '123abc'} as Token}
+			cfInstances: {
+				'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance,
+				'lab.run.io': {token: {access_token: '123abc'} as Token} as Instance
+			}
 		} as SettingsState;
 
 		settingsReducer(state, action).should.eql({
 			...state,
 			isRefreshingToken: false,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token, 'lab.run.io': {access_token: 'newToken'} as Token}
+			cfInstances: {
+				'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance,
+				'lab.run.io': {token: {access_token: 'newToken'} as Token} as Instance
+			}
 		} as SettingsState);
 	});
 
@@ -101,14 +113,20 @@ describe('Settings Reducer', () => {
 	it('should update the settings retrieved from disk', () => {
 		const action = {
 			type: actionTypes.RETRIEVED_SETTINGS,
-			settings: {'lab.run.io1': {access_token: 'abc123'} as Token, 'lab.run.io': {access_token: '123abc'} as Token}
+			settings: {
+				'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance,
+				'lab.run.io': {token: {access_token: '123abc'} as Token} as Instance
+			}
 		} as Action;
 		const state = {...settings, isReadingSettings: true} as SettingsState;
 
 		settingsReducer(state, action).should.eql({
 			...state,
 			isReadingSettings: false,
-			cfInstances: {'lab.run.io1': {access_token: 'abc123'} as Token, 'lab.run.io': {access_token: '123abc'} as Token}
+			cfInstances: {
+				'lab.run.io1': {token: {access_token: 'abc123'} as Token} as Instance,
+				'lab.run.io': {token: {access_token: '123abc'} as Token} as Instance
+			}
 		} as SettingsState);
 	});
 
