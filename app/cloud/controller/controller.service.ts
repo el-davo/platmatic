@@ -1,9 +1,9 @@
 import {json} from 'web-request';
-import {settings} from '../settings/settings.interface';
 import {controllerInfo} from './controllerInfo.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function getControllerInfo(settings: settings): Promise<controllerInfo> {
-	return json<controllerInfo>(`${settings.cfInstance}/v2/info`, {
+export function getControllerInfo(instance: Instance): Promise<controllerInfo> {
+	return json<controllerInfo>(`${instance.cfInstance}/v2/info`, {
 		strictSSL: false,
 		throwResponseError: true,
 		json: true

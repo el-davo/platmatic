@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import ToggleDisplay from 'react-toggle-display';
 import {LoadingComponent} from '../common/loading.component';
+import {SettingsState} from './settings.state';
 
 const ERROR_CF_INSTANCE_REQUIRED = 'Cloud Foundry instance is required';
 const ERROR_USERNAME_REQUIRED = 'Username is required';
@@ -17,7 +18,12 @@ const styles = {
 	}
 };
 
-export class CredentialsDialogComponent extends React.Component<any, any> {
+interface Props {
+	settings: SettingsState;
+	requestLogin(cfInstance: string, username: string, password: string);
+}
+
+export class CredentialsDialogComponent extends React.Component<Props, any> {
 
 	constructor(props, context) {
 		super(props, context);
@@ -88,9 +94,7 @@ export class CredentialsDialogComponent extends React.Component<any, any> {
 				title="Cloud Foundry Login"
 				modal={false}
 				actions={actions}
-				open={(!this.props.settings.isLoggedIn || this.props.settings.loginFailed)
-        && !this.props.settings.isReadingSettings
-        && !this.props.settings.isRefreshingToken}
+				open={this.props.settings.showAddCfInstanceModal}
 			>
 				<ToggleDisplay show={!this.props.settings.isLoggingIn}>
 

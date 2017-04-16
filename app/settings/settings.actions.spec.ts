@@ -38,13 +38,13 @@ describe('Settings actions', () => {
 	});
 
 	it('should refresh the token for a cf instance', () => {
-		const cfInstance = {'lab.run.io': {token: {access_token: 'abc123'} as Token} as Instance} as CfInstance;
-		actions.refreshToken(cfInstance).should.eql({type: actionTypes.REFRESH_TOKEN, cfInstance});
+		const instance = {token: {access_token: 'abc123'} as Token} as Instance;
+		actions.refreshToken(instance).should.eql({type: actionTypes.REFRESH_TOKEN, instance});
 	});
 
 	it('should alert the user that the token has been refreshed for a cf instance', () => {
-		const cfInstance = {'lab.run.io': {token: {access_token: 'abc123'} as Token} as Instance} as CfInstance;
-		actions.tokenRefreshed(cfInstance).should.eql({type: actionTypes.TOKEN_REFRESHED, cfInstance});
+		const instance = {token: {access_token: 'abc123'} as Token} as Instance;
+		actions.tokenRefreshed(instance).should.eql({type: actionTypes.TOKEN_REFRESHED, instance});
 	});
 
 	it('should load the settings from disk', () => {

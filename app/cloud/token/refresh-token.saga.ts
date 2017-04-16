@@ -1,26 +1,30 @@
 import {takeEvery, delay} from 'redux-saga';
-import {call, put, select} from 'redux-saga/effects';
+import {call, put} from 'redux-saga/effects';
 import {REFRESH_TOKEN} from '../../settings/settings.action-types';
 import {refreshCloudToken} from './token.service';
-import {saveToken} from '../../settings/service/settings.service';
+import {getSettings, saveToken} from '../../settings/service/settings.service';
 import {getControllerInfo} from '../controller/controller.service';
 import {tokenRefreshed, refreshToken, invalidLogin} from '../../settings/settings.actions';
+import {Instance} from "../../settings/settings.state";
 
-function* refresh() {
+function* refresh({instance}: {instance: Instance}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let controllerInfo = yield call(getControllerInfo, instance);
 
-		let controllerInfo = yield call(getControllerInfo, settings);
+		let token = yield call(refreshCloudToken, instance, controllerInfo);
 
-		let token = yield call(refreshCloudToken, settings, controllerInfo);
+		let settings = yield call(getSettings);
 
-		yield call(saveToken, settings.cfInstance, token.body);
+		yield call(saveToken, {
+			...settings,
+			cfInstances: {...settings.cfInstances, [instance.cfInstance]: {...instance, token: token.body}}
+		});
 
-		yield put(tokenRefreshed(token.body));
+		yield put(tokenRefreshed({...instance, token: token.body}));
 
 		yield call(delay, (token.body.expires_in * 1000) - 60000);
 
-		yield put(refreshToken());
+		yield put(refreshToken({...instance, token: token.body}));
 	} catch (e) {
 		console.log(e);
 

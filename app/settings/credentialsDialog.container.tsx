@@ -14,8 +14,8 @@ interface Actions {
 }
 
 const container: React.StatelessComponent<{}> = (props: containerProps) => {
-	return (<CredentialsDialogComponent settings={props.settings}
-																			requestLogin={props.actions.requestLogin}/>)
+	return <CredentialsDialogComponent settings={props.settings}
+																			requestLogin={props.actions.requestLogin}/>
 };
 
 function mapStateToProps(state) {

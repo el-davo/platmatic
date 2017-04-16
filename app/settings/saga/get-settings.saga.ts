@@ -2,7 +2,7 @@ import {takeEvery} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import {REQUEST_GET_SETTINGS} from '../settings.action-types';
 import {getSettings} from '../service/settings.service';
-import {invalidLogin, retrievedSettings, refreshToken} from '../settings.actions';
+import {invalidLogin, retrievedSettings, refreshToken, openAddCfInstanceDialog} from '../settings.actions';
 import {Settings} from '../settings.interface';
 
 function* fetch() {
@@ -11,11 +11,15 @@ function* fetch() {
 
 		yield put(retrievedSettings(settings));
 
-		//yield put(refreshToken());
+		for (let key of Object.keys(settings.cfInstances)) {
+			yield put(refreshToken(settings.cfInstances[key]));
+		}
 	} catch (e) {
 		console.log(e);
 
 		yield put(invalidLogin());
+
+		yield put(openAddCfInstanceDialog());
 	}
 }
 

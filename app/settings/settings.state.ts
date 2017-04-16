@@ -29,4 +29,5 @@ export interface CfInstance {
 export interface Instance {
 	token: Token;
 	primary: boolean;
+	cfInstance: string;
 }

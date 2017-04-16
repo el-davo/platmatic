@@ -1,7 +1,7 @@
 import * as actionTypes from './settings.action-types';
 import {Token} from '../cloud/user/token.interface';
 import {Settings} from './settings.interface';
-import {CfInstance} from "./settings.state";
+import {CfInstance, Instance} from "./settings.state";
 
 export function requestLogin(cfInstance: string, username: string, password: string) {
 	return {type: actionTypes.REQUEST_LOGIN, cfInstance, username, password};
@@ -23,12 +23,12 @@ export function invalidLogin() {
 	return {type: actionTypes.INVALID_LOGIN};
 }
 
-export function refreshToken(cfInstance: CfInstance) {
-	return {type: actionTypes.REFRESH_TOKEN, cfInstance}
+export function refreshToken(instance: Instance) {
+	return {type: actionTypes.REFRESH_TOKEN, instance}
 }
 
-export function tokenRefreshed(cfInstance: CfInstance) {
-	return {type: actionTypes.TOKEN_REFRESHED, cfInstance};
+export function tokenRefreshed(instance: Instance) {
+	return {type: actionTypes.TOKEN_REFRESHED, instance};
 }
 
 export function requestGetSettings() {

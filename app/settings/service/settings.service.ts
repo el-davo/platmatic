@@ -2,6 +2,7 @@ import {join} from 'path';
 import {unlink} from 'fs';
 import {ensureDir} from 'fs-extra';
 import {readFile, writeFile}  from 'jsonfile';
+import {Settings} from "../settings.interface";
 
 let homeDirectory = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
 let homeDir = join(homeDirectory, '.platmatic');
@@ -13,9 +14,9 @@ export function ensureSettingsDirectoryExists() {
 	});
 }
 
-export function saveToken(cfInstance, token) {
+export function saveToken(settings: Settings) {
 	return new Promise((resolve, reject) => {
-		writeFile(settingsFilePath, {cfInstance, token}, {spaces: 2}, err => {
+		writeFile(settingsFilePath, settings, {spaces: 2}, err => {
 			err ? reject(err) : resolve();
 		});
 	});
@@ -31,7 +32,7 @@ export function getSettings() {
 
 export function logout() {
 	return new Promise((resolve, reject) => {
-		unlink(settingsFilePath, function (err) {
+		unlink(settingsFilePath, function(err) {
 			err ? reject(err) : resolve();
 		});
 	});

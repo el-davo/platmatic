@@ -6,7 +6,7 @@ import {controllerInfo} from '../../cloud/controller/controllerInfo.interface';
 import {getControllerInfo} from '../../cloud/controller/controller.service';
 import {login} from '../../cloud/user/login.service';
 import {ensureSettingsDirectoryExists, saveToken} from '../service/settings.service';
-import {loggedIn, refreshToken, invalidLogin} from '../settings.actions';
+import {loggedIn, refreshToken, invalidLogin, closeCfInstanceDialog} from '../settings.actions';
 import {CfInstance, SettingsState} from '../settings.state';
 
 function* fetch({cfInstance, username, password}) {
@@ -19,9 +19,11 @@ function* fetch({cfInstance, username, password}) {
 
 		yield call(ensureSettingsDirectoryExists);
 
-		yield call(saveToken, {...settings.cfInstances, [cfInstance]: {token: token.body}});
+		yield call(saveToken, {cfInstances: {...settings.cfInstances, [cfInstance]: {token: token.body, cfInstance}}});
 
-		yield put(loggedIn({[cfInstance]: {token: token.body}} as CfInstance));
+		yield put(loggedIn({[cfInstance]: {token: token.body, cfInstance}} as CfInstance));
+
+		yield put(closeCfInstanceDialog());
 
 		//yield put(refreshToken());
 	} catch (e) {
