@@ -4,7 +4,7 @@ import {REFRESH_TOKEN} from '../../settings/settings.action-types';
 import {refreshCloudToken} from './token.service';
 import {getSettings, saveToken} from '../../settings/service/settings.service';
 import {getControllerInfo} from '../controller/controller.service';
-import {tokenRefreshed, refreshToken, invalidLogin} from '../../settings/settings.actions';
+import {tokenRefreshed, refreshToken, invalidLogin, setActiveInstance} from '../../settings/settings.actions';
 import {Instance} from "../../settings/settings.state";
 
 function* refresh({instance}: {instance: Instance}) {
@@ -22,13 +22,17 @@ function* refresh({instance}: {instance: Instance}) {
 
 		yield put(tokenRefreshed({...instance, token: token.body}));
 
+		if (instance.primary) {
+			yield put(setActiveInstance(instance));
+		}
+
 		yield call(delay, (token.body.expires_in * 1000) - 60000);
 
 		yield put(refreshToken({...instance, token: token.body}));
 	} catch (e) {
 		console.log(e);
 
-		yield put(invalidLogin());
+		yield put(invalidLogin(instance));
 	}
 }
 

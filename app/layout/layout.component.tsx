@@ -7,6 +7,8 @@ import LogsContainer from '../instance/logs/logs.container';
 import CreateAppFloatingButtonContainer from '../instance/create-app/floating-button/create-app-floating-button.container';
 import CreateAppModalContainer from '../instance/create-app/create-app-modal.container';
 import PurchaseContainer from '../instance/market/purchase/purchase.container';
+import {Settings} from "../settings/settings.interface";
+import {SettingsState} from "../settings/settings.state";
 
 const style = {
 	container: {
@@ -22,7 +24,12 @@ const style = {
 	}
 };
 
-export class LayoutComponent extends React.Component<any, any> {
+interface Props {
+	settings: SettingsState,
+	createApp: any
+}
+
+export class LayoutComponent extends React.Component<Props, any> {
 
 	constructor(props, context) {
 		super(props, context);
@@ -32,7 +39,7 @@ export class LayoutComponent extends React.Component<any, any> {
 		return (
 			<div>
 				{
-					this.props.settings.isLoggedIn ? (
+					this.props.settings.activeInstance.isLoggedIn ? (
 							<table style={style.container}>
 								<tbody>
 								<tr>

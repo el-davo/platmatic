@@ -4,12 +4,13 @@ import {toastr} from 'react-redux-toastr';
 
 import {START_APP} from '../../instance/apps/apps.action-types';
 import {startApp} from './apps.service';
+import {SettingsState} from "../../settings/settings.state";
 
 function* start({guid}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 
-		yield call(startApp, settings, guid);
+		yield call(startApp, settings.activeInstance, guid);
 
 		toastr.success('Alert', 'App started successfully');
 	} catch (e) {

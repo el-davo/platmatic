@@ -1,10 +1,10 @@
 import {json} from 'web-request';
-import {settings} from '../settings/settings.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function fetchSpacesInOrganization(settings: settings, organization_guid) {
-	return json(`${settings.cfInstance}/v2/organizations/${organization_guid}/summary`, {
+export function fetchSpacesInOrganization(instance: Instance, organization_guid) {
+	return json(`${instance.cfInstance}/v2/organizations/${organization_guid}/summary`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`,
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`,
 			Accept: "application/json"
 		},
 		strictSSL: false,
@@ -12,10 +12,10 @@ export function fetchSpacesInOrganization(settings: settings, organization_guid)
 	});
 }
 
-export function getAppsInSpace(settings: settings, space_guid, filter) {
-	return json(`${settings.cfInstance}/v2/spaces/${space_guid}/apps`, {
+export function getAppsInSpace(instance: Instance, space_guid, filter) {
+	return json(`${instance.cfInstance}/v2/spaces/${space_guid}/apps`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`,
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`,
 			Accept: "application/json"
 		},
 		strictSSL: false,
@@ -26,10 +26,10 @@ export function getAppsInSpace(settings: settings, space_guid, filter) {
 	});
 }
 
-export function fetchAllSpaces(settings: settings) {
-	return json(`${settings.cfInstance}/v2/spaces`, {
+export function fetchAllSpaces(instance: Instance) {
+	return json(`${instance.cfInstance}/v2/spaces`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`,
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`,
 			Accept: "application/json"
 		},
 		strictSSL: false,

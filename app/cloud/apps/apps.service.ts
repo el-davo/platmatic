@@ -1,10 +1,10 @@
 import * as WebRequest from 'web-request';
-import {settings} from '../settings/settings.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function fetchAppsInSpace(settings: settings, guid: string, apps) {
-	return WebRequest.json(`${settings.cfInstance}/v2/spaces/${guid}/apps`, {
+export function fetchAppsInSpace(instance: Instance, guid: string, apps) {
+	return WebRequest.json(`${instance.cfInstance}/v2/spaces/${guid}/apps`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -15,30 +15,30 @@ export function fetchAppsInSpace(settings: settings, guid: string, apps) {
 	});
 }
 
-export function fetchApp(settings, guid) {
-	return WebRequest.json(`${settings.cfInstance}/v2/apps/${guid}`, {
+export function fetchApp(instance: Instance, guid) {
+	return WebRequest.json(`${instance.cfInstance}/v2/apps/${guid}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false
 	});
 }
 
-export function fetchAppSummary(settings, guid) {
-	return WebRequest.json(`${settings.cfInstance}/v2/apps/${guid}/summary`, {
+export function fetchAppSummary(instance: Instance, guid) {
+	return WebRequest.json(`${instance.cfInstance}/v2/apps/${guid}/summary`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false
 	});
 }
 
-export function startApp(settings: settings, guid) {
-	return WebRequest.put(`${settings.cfInstance}/v2/apps/${guid}`, {
+export function startApp(instance: Instance, guid) {
+	return WebRequest.put(`${instance.cfInstance}/v2/apps/${guid}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -46,10 +46,10 @@ export function startApp(settings: settings, guid) {
 	});
 }
 
-export function stopApp(settings, guid) {
-	return WebRequest.put(`${settings.cfInstance}/v2/apps/${guid}`, {
+export function stopApp(instance: Instance, guid) {
+	return WebRequest.put(`${instance.cfInstance}/v2/apps/${guid}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -57,18 +57,18 @@ export function stopApp(settings, guid) {
 	});
 }
 
-export function deleteApp(settings, app_guid) {
-	return WebRequest.delete(`${settings.cfInstance}/v2/apps/${app_guid}`, {
+export function deleteApp(instance: Instance, app_guid) {
+	return WebRequest.delete(`${instance.cfInstance}/v2/apps/${app_guid}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 	})
 }
 
-export function fetchAllApps(settings: settings, page) {
-	return WebRequest.json(`${settings.cfInstance}/v2/apps`, {
+export function fetchAllApps(instance: Instance, page) {
+	return WebRequest.json(`${instance.cfInstance}/v2/apps`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -78,10 +78,10 @@ export function fetchAllApps(settings: settings, page) {
 	});
 }
 
-export function scaleApp(settings: settings, guid: string, instances: number, memory: number, disk: number) {
-	return WebRequest.put(`${settings.cfInstance}/v2/apps/${guid}`, {
+export function scaleApp(instance: Instance, guid: string, instances: number, memory: number, disk: number) {
+	return WebRequest.put(`${instance.cfInstance}/v2/apps/${guid}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -89,10 +89,10 @@ export function scaleApp(settings: settings, guid: string, instances: number, me
 	});
 }
 
-export function restageApp(settings: settings, guid: string) {
-	return WebRequest.post(`${settings.cfInstance}/v2/apps/${guid}/restage`, {
+export function restageApp(instance: Instance, guid: string) {
+	return WebRequest.post(`${instance.cfInstance}/v2/apps/${guid}/restage`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		}
 	});
 }

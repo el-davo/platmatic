@@ -6,8 +6,8 @@ import {controllerInfo} from '../../cloud/controller/controllerInfo.interface';
 import {getControllerInfo} from '../../cloud/controller/controller.service';
 import {login} from '../../cloud/user/login.service';
 import {ensureSettingsDirectoryExists, saveToken} from '../service/settings.service';
-import {loggedIn, refreshToken, invalidLogin, closeCfInstanceDialog} from '../settings.actions';
-import {CfInstance, SettingsState} from '../settings.state';
+import {loggedIn, refreshToken, closeCfInstanceDialog} from '../settings.actions';
+import {SettingsState, Instance} from '../settings.state';
 
 function* fetch({cfInstance, username, password}) {
 	try {
@@ -19,19 +19,22 @@ function* fetch({cfInstance, username, password}) {
 
 		yield call(ensureSettingsDirectoryExists);
 
-		yield call(saveToken, {cfInstances: {...settings.cfInstances, [cfInstance]: {token: token.body, cfInstance}}});
+		yield call(saveToken, {
+			cfInstances: {
+				...settings.cfInstances,
+				[cfInstance]: {token: token.body, cfInstance, primary: true}
+			}
+		});
 
-		yield put(loggedIn({[cfInstance]: {token: token.body, cfInstance}} as CfInstance));
+		yield put(loggedIn({token: token.body, cfInstance, primary: true} as Instance));
 
 		yield put(closeCfInstanceDialog());
 
-		//yield put(refreshToken());
+		yield put(refreshToken({token: token.body, cfInstance, primary: true} as Instance));
 	} catch (e) {
 		console.log(e);
 
 		toastr.error('Error', 'Invalid credentials, Please try again');
-
-		yield put(invalidLogin());
 	}
 }
 

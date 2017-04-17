@@ -1,14 +1,13 @@
 import * as actionTypes from './settings.action-types';
-import {Token} from '../cloud/user/token.interface';
 import {Settings} from './settings.interface';
-import {CfInstance, Instance} from "./settings.state";
+import {Instance} from "./settings.state";
 
 export function requestLogin(cfInstance: string, username: string, password: string) {
 	return {type: actionTypes.REQUEST_LOGIN, cfInstance, username, password};
 }
 
-export function loggedIn(cfInstance: CfInstance) {
-	return {type: actionTypes.LOGGED_IN, cfInstance};
+export function loggedIn(instance: Instance) {
+	return {type: actionTypes.LOGGED_IN, instance};
 }
 
 export function requestLogout(cfInstance: string) {
@@ -19,8 +18,8 @@ export function loggedOut(cfInstance: string) {
 	return {type: actionTypes.LOGGED_OUT, cfInstance};
 }
 
-export function invalidLogin() {
-	return {type: actionTypes.INVALID_LOGIN};
+export function invalidLogin(instance: Instance) {
+	return {type: actionTypes.INVALID_LOGIN, instance};
 }
 
 export function refreshToken(instance: Instance) {
@@ -45,4 +44,8 @@ export function openAddCfInstanceDialog() {
 
 export function closeCfInstanceDialog() {
 	return {type: actionTypes.CLOSE_ADD_CF_INSTANCE_DIALOG};
+}
+
+export function setActiveInstance(instance: Instance) {
+	return {type: actionTypes.SET_ACTIVE_INSTANCE, instance};
 }

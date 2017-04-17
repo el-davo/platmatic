@@ -9,17 +9,18 @@ import {
 } from './app-stats.service';
 import {fetchApp} from '../apps/apps.service';
 import {updateAppStats} from '../../instance/app-stats/app-stats.actions';
+import {SettingsState} from "../../settings/settings.state";
 
 function* fetch({guid}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 
 		let [summary, stats, serviceBindings, environmentVariables, app] = yield [
-			call(fetchAppSummary, settings, guid),
-			call(fetchAppStats, settings, guid),
-			call(fetchAppServiceBindings, settings, guid),
-			call(fetchAppEnvironmentVariables, settings, guid),
-			call(fetchApp, settings, guid)
+			call(fetchAppSummary, settings.activeInstance, guid),
+			call(fetchAppStats, settings.activeInstance, guid),
+			call(fetchAppServiceBindings, settings.activeInstance, guid),
+			call(fetchAppEnvironmentVariables, settings.activeInstance, guid),
+			call(fetchApp, settings.activeInstance, guid)
 		];
 
 		yield put(updateAppStats(stats, summary, serviceBindings.resources, environmentVariables, app));

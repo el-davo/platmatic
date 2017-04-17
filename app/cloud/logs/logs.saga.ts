@@ -6,14 +6,16 @@ import {getControllerInfo} from '../controller/controller.service';
 import {logStreamConnectSuccess, logStreamConnectFailed} from '../../instance/logs/logs.actions';
 import {logsListenerSaga} from './logs-listener.saga';
 import {logsStreamTerminateSaga} from './logs-terminate.saga';
+import {SettingsState} from "../../settings/settings.state";
+import {controllerInfo} from "../controller/controllerInfo.interface";
 
 function* fetch({app}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 
-		let instance = yield call(getControllerInfo, settings);
+		let cfInfo: controllerInfo = yield call(getControllerInfo, settings.activeInstance);
 
-		let ws = yield call(connectToLogWebsocket, settings, instance, app);
+		let ws = yield call(connectToLogWebsocket, settings.activeInstance, cfInfo, app);
 
 		yield [
 			fork(logsListenerSaga, ws),

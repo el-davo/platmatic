@@ -19,7 +19,7 @@ export function refreshAppStats(guid) {
 	return {type: REFRESH_APP_STATS, guid};
 }
 
-export function updateAppStats(stats, summary, serviceBindings, environmentVariables, app) {
+export function updateAppStats(stats, summary, serviceBindings, environmentVariables, app?) {
 	return {type: UPDATE_APP_STATS, stats, summary, serviceBindings, environmentVariables, app}
 }
 

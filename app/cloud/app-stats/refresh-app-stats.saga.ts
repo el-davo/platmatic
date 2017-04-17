@@ -4,14 +4,15 @@ import {REFRESH_APP_STATS} from '../../instance/app-stats/app-stats.action-types
 import {updateAppData, updateAppStatsMemCpu} from '../../instance/app-stats/app-stats.actions';
 import {fetchAppStats} from './app-stats.service';
 import {fetchApp} from '../apps/apps.service';
+import {SettingsState} from "../../settings/settings.state";
 
 function* refresh({guid}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 
 		let [app, stats] = yield [
-			call(fetchApp, settings, guid),
-			call(fetchAppStats, settings, guid)
+			call(fetchApp, settings.activeInstance, guid),
+			call(fetchAppStats, settings.activeInstance, guid)
 		];
 
 		yield put(updateAppData(app));

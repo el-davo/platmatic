@@ -19,8 +19,8 @@ describe('Settings actions', () => {
 	});
 
 	it('should let the user know they logged in successfully', () => {
-		const cfInstance = {'lab.run.io': {token: {access_token: 'abc123'} as Token} as Instance} as CfInstance;
-		actions.loggedIn(cfInstance).should.eql({type: actionTypes.LOGGED_IN, cfInstance});
+		const instance = {token: {access_token: 'abc123'} as Token} as Instance;
+		actions.loggedIn(instance).should.eql({type: actionTypes.LOGGED_IN, instance});
 	});
 
 	it('should request that the user be logged out of a cf instance', () => {
@@ -34,7 +34,8 @@ describe('Settings actions', () => {
 	});
 
 	it('should alert the user that the login attempt failed', () => {
-		actions.invalidLogin().should.eql({type: actionTypes.INVALID_LOGIN});
+		const instance = {token: {access_token: 'abc123'} as Token} as Instance;
+		actions.invalidLogin(instance).should.eql({type: actionTypes.INVALID_LOGIN, instance});
 	});
 
 	it('should refresh the token for a cf instance', () => {
@@ -62,6 +63,11 @@ describe('Settings actions', () => {
 
 	it('should close the add cf instance dialog', () => {
 		actions.closeCfInstanceDialog().should.eql({type: actionTypes.CLOSE_ADD_CF_INSTANCE_DIALOG});
+	});
+
+	it('should set the active cloud foundry instance', () => {
+		const instance = {token: {access_token: 'abc123'} as Token} as Instance;
+		actions.setActiveInstance(instance).should.eql({type: actionTypes.SET_ACTIVE_INSTANCE, instance});
 	});
 
 });

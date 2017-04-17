@@ -4,13 +4,14 @@ import {toastr} from 'react-redux-toastr';
 import {REQUEST_DELETE_APP} from '../../instance/apps/apps.action-types';
 import {deleteApp} from './apps.service';
 import {appDeleted} from '../../instance/apps/apps.actions'
+import {SettingsState} from "../../settings/settings.state";
 
 function* execute({app}) {
 
   try {
-    let settings = yield select((state: any) => state.settings);
+    let settings: SettingsState = yield select((state: any) => state.settings);
 
-    yield call(deleteApp, settings, app.metadata.guid);
+    yield call(deleteApp, settings.activeInstance, app.metadata.guid);
 
     yield put(appDeleted(app));
 

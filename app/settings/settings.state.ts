@@ -8,6 +8,7 @@ export const settings = {
 	isReadingSettings: false,
 	isSettingsLoaded: false,
 	showAddCfInstanceModal: false,
+	activeInstance: {},
 	cfInstances: {}
 } as SettingsState;
 
@@ -19,6 +20,7 @@ export interface SettingsState {
 	isReadingSettings: boolean;
 	isSettingsLoaded: boolean;
 	showAddCfInstanceModal: boolean;
+	activeInstance: Instance,
 	cfInstances: CfInstance
 }
 
@@ -27,6 +29,7 @@ export interface CfInstance {
 }
 
 export interface Instance {
+	isLoggedIn: boolean;
 	token: Token;
 	primary: boolean;
 	cfInstance: string;
