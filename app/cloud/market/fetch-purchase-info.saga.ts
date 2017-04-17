@@ -7,13 +7,14 @@ import {
 	requestPurchasePlansFailed
 } from '../../instance/market/market.actions';
 import {fetchServicePurchaseInfo} from './market.service';
+import {SettingsState} from "../../settings/settings.state";
 
 function* fetch({page, service}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 		let {purchasePlans} = yield select((state: any) => state.market);
 
-		let plans = yield call(fetchServicePurchaseInfo, settings, page, service);
+		let plans = yield call(fetchServicePurchaseInfo, settings.activeInstance, page, service);
 
 		yield put(addPurchasePlans(plans.resources));
 

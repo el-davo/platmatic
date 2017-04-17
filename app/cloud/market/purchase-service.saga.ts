@@ -4,19 +4,20 @@ import {toastr} from 'react-redux-toastr';
 import {REQUEST_PURCHASE_SERVICE} from '../../instance/market/market.action-types';
 import {showPurchaseCompleteScreen} from '../../instance/market/market.actions';
 import {purchaseService, fetchServiceInstance} from './market.service';
+import {SettingsState} from "../../settings/settings.state";
 
 function* purchase({name, spaceGuid, planGuid}) {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 
-		let service = yield call(purchaseService, settings, name, spaceGuid, planGuid);
+		let service = yield call(purchaseService, settings.activeInstance, name, spaceGuid, planGuid);
 
 		yield put(showPurchaseCompleteScreen());
 
 		for (let i = 0; i < 20; i++) {
 			yield call(delay, 5000);
 
-			let instance = yield call(fetchServiceInstance, settings, service.body.metadata.guid);
+			let instance = yield call(fetchServiceInstance, settings.activeInstance, service.body.metadata.guid);
 
 			if (instance.entity.last_operation.state === 'failed') {
 				toastr.error('Error', 'Failed to provision service');

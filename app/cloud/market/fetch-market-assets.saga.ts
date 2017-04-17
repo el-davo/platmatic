@@ -3,13 +3,14 @@ import {call, put, select} from 'redux-saga/effects';
 import {FETCH_MARKET_ASSETS} from '../../instance/market/market.action-types';
 import {addMarketAssets, fetchMarketAssets} from '../../instance/market/market.actions';
 import {fetchServices} from './market.service';
+import {SettingsState} from "../../settings/settings.state";
 
 function* fetch() {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 		let market = yield select((state: any) => state.market);
 
-		let assets = yield call(fetchServices, settings, market.page, 25);
+		let assets = yield call(fetchServices, settings.activeInstance, market.page, 25);
 
 		yield put(addMarketAssets(assets));
 

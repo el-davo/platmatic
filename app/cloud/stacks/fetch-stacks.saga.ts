@@ -3,12 +3,13 @@ import {call, put, select} from 'redux-saga/effects';
 import {FETCH_STACKS} from '../../instance/stacks/stacks.action-types';
 import {fetchStacks} from './stacks.services';
 import {updateStacks} from '../../instance/stacks/stacks.actions';
+import {SettingsState} from "../../settings/settings.state";
 
 function* fetch() {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 
-		let stacks = yield call(fetchStacks, settings);
+		let stacks = yield call(fetchStacks, settings.activeInstance);
 
 		yield put(updateStacks(stacks.resources));
 	} catch (e) {

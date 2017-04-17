@@ -1,10 +1,10 @@
 import {json} from 'web-request';
-import {settings} from '../settings/settings.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function fetchStacks(settings: settings) {
-	return json(`${settings.cfInstance}/v2/stacks`, {
+export function fetchStacks(instance: Instance) {
+	return json(`${instance.cfInstance}/v2/stacks`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false

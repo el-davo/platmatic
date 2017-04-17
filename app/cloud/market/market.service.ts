@@ -1,10 +1,10 @@
 import {json, post, Response} from 'web-request';
-import {settings} from '../settings/settings.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function fetchServices(settings: settings, page: number, resultsPerPage: number) {
-	return json(`${settings.cfInstance}/v2/services`, {
+export function fetchServices(instance: Instance, page: number, resultsPerPage: number) {
+	return json(`${instance.cfInstance}/v2/services`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -12,30 +12,30 @@ export function fetchServices(settings: settings, page: number, resultsPerPage: 
 	});
 }
 
-export function fetchServicePurchaseInfo(settings: settings, page, service) {
-	return json(`${settings.cfInstance}${service.entity.service_plans_url}`, {
+export function fetchServicePurchaseInfo(instance: Instance, page: number, service) {
+	return json(`${instance.cfInstance}${service.entity.service_plans_url}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false
 	});
 }
 
-export function fetchServiceInstance(settings, serviceGuid) {
-	return json(`${settings.cfInstance}/v2/service_instances/${serviceGuid}`, {
+export function fetchServiceInstance(instance: Instance, serviceGuid) {
+	return json(`${instance.cfInstance}/v2/service_instances/${serviceGuid}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false
 	});
 }
 
-export function purchaseService(settings: settings, name, space_guid, service_plan_guid): Promise<Response<string>> {
-	return post(`${settings.cfInstance}/v2/service_instances?accepts_incomplete=true`, {
+export function purchaseService(instance: Instance, name, space_guid, service_plan_guid): Promise<Response<string>> {
+	return post(`${instance.cfInstance}/v2/service_instances?accepts_incomplete=true`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		form: JSON.stringify({name, space_guid, service_plan_guid}),
 		throwResponseError: true,

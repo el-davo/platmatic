@@ -1,11 +1,11 @@
 import {post, put} from 'request';
 import {json} from 'web-request';
-import {settings} from '../settings/settings.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function checkRouteExists(settings: settings, domain_guid: string, host: string) {
-	return json(`${settings.cfInstance}/v2/routes/reserved/domain/${domain_guid}?host=${host}`, {
+export function checkRouteExists(instance: Instance, domain_guid: string, host: string) {
+	return json(`${instance.cfInstance}/v2/routes/reserved/domain/${domain_guid}?host=${host}`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		throwResponseError: true,
 		strictSSL: false,
@@ -15,11 +15,11 @@ export function checkRouteExists(settings: settings, domain_guid: string, host: 
 	});
 }
 
-export function createRoute(settings, domain_guid, space_guid, host) {
+export function createRoute(instance: Instance, domain_guid, space_guid, host) {
 	return new Promise((resolve, reject) => {
-		post(`${settings.cfInstance}/v2/routes`, {
+		post(`${instance.cfInstance}/v2/routes`, {
 			headers: {
-				Authorization: `${settings.token.token_type} ${settings.token.access_token}`,
+				Authorization: `${instance.token.token_type} ${instance.token.access_token}`,
 				Accept: "application/json"
 			},
 			rejectUnauthorized: false,
@@ -30,11 +30,11 @@ export function createRoute(settings, domain_guid, space_guid, host) {
 	});
 }
 
-export function associateAppWithRoute(settings: settings, guid, app_guid) {
+export function associateAppWithRoute(instance: Instance, guid, app_guid) {
 	return new Promise((resolve, reject) => {
-		put(`${settings.cfInstance}/v2/routes/${guid}/apps/${app_guid}`, {
+		put(`${instance.cfInstance}/v2/routes/${guid}/apps/${app_guid}`, {
 			headers: {
-				Authorization: `${settings.token.token_type} ${settings.token.access_token}`,
+				Authorization: `${instance.token.token_type} ${instance.token.access_token}`,
 				Accept: "application/json"
 			},
 			rejectUnauthorized: false

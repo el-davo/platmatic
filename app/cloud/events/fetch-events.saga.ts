@@ -4,6 +4,7 @@ import {FETCH_EVENTS} from '../../instance/events/events.action-types';
 import {fetchEvents} from './events.service';
 import {fetchEvents as retry} from '../../instance/events/events.actions';
 import {updateEvents} from '../../instance/events/events.actions';
+import {SettingsState} from "../../settings/settings.state";
 
 function* fetch() {
 
@@ -13,9 +14,9 @@ function* fetch() {
 		while (doFetch) {
 			doFetch = yield select((state: any) => state.events.fetchEvents);
 
-			let settings = yield select((state: any) => state.settings);
+			let settings: SettingsState = yield select((state: any) => state.settings);
 
-			let events = yield call(fetchEvents, settings);
+			let events = yield call(fetchEvents, settings.activeInstance);
 
 			yield put(updateEvents(events.resources));
 

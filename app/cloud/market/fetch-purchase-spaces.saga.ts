@@ -4,16 +4,17 @@ import {REQUEST_FETCH_PURCHASE_SPACES} from '../../instance/market/market.action
 import {updatePurchaseSpaces} from '../../instance/market/market.actions';
 import {fetchSpacesInOrganization} from '../spaces/spaces.service';
 import {fetchOrganizations} from '../organizations/organization.service';
+import {SettingsState} from "../../settings/settings.state";
 
 function* fetch() {
 	try {
-		let settings = yield select((state: any) => state.settings);
+		let settings: SettingsState = yield select((state: any) => state.settings);
 		let purchaseSpaces = [];
 
-		let organizations = yield call(fetchOrganizations, settings);
+		let organizations = yield call(fetchOrganizations, settings.activeInstance);
 
 		yield organizations.resources.map(function*(organization) {
-			let {spaces} = yield call(fetchSpacesInOrganization, settings, organization.metadata.guid);
+			let {spaces} = yield call(fetchSpacesInOrganization, settings.activeInstance, organization.metadata.guid);
 
 			purchaseSpaces.push({organization, spaces});
 		});

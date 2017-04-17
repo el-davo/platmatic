@@ -1,6 +1,8 @@
 import * as sinon from 'sinon';
 import * as CF from 'cf-nodejs-client';
 import {createApp} from './create-app.service';
+import {Instance} from "../../settings/settings.state";
+import {Token} from "../user/token.interface";
 
 describe('Create App Service', () => {
 
@@ -25,17 +27,17 @@ describe('Create App Service', () => {
     });
 
     it('should initialize a new app', () => {
-      let settings = {cfInstance: 'test.cloud.com', token: 'abc123'};
+      let instance = {cfInstance: 'test.cloud.com', token: {access_token: 'abc123'} as Token} as Instance;
       let app = {name: 'newApp'};
 
-      createApp(settings, app);
+      createApp(instance, app);
 
       appsStub.calledOnce.should.equal(true);
       setTokenStub.calledOnce.should.equal(true);
       addStub.calledOnce.should.equal(true);
 
-      sinon.assert.calledWith(appsStub, settings.cfInstance);
-      sinon.assert.calledWith(setTokenStub, settings.token);
+      sinon.assert.calledWith(appsStub, instance.cfInstance);
+      sinon.assert.calledWith(setTokenStub, instance.token);
       sinon.assert.calledWith(addStub, app);
     });
   });

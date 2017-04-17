@@ -1,10 +1,10 @@
 import {json} from 'web-request';
-import {settings} from '../settings/settings.interface';
+import {Instance} from "../../settings/settings.state";
 
-export function fetchEvents(settings: settings): any {
-	return json(`${settings.cfInstance}/v2/events`, {
+export function fetchEvents(instance: Instance): any {
+	return json(`${instance.cfInstance}/v2/events`, {
 		headers: {
-			Authorization: `${settings.token.token_type} ${settings.token.access_token}`
+			Authorization: `${instance.token.token_type} ${instance.token.access_token}`
 		},
 		strictSSL: false,
 		throwResponseError: true,
