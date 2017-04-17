@@ -1,7 +1,6 @@
 import {Token} from '../cloud/user/token.interface';
 
 export const settings = {
-	isLoggedIn: false,
 	isLoggingIn: false,
 	isLoggingOut: false,
 	isRefreshingToken: true,
@@ -13,7 +12,6 @@ export const settings = {
 } as SettingsState;
 
 export interface SettingsState {
-	isLoggedIn: boolean;
 	isLoggingIn: boolean;
 	isLoggingOut: boolean;
 	isRefreshingToken: boolean;

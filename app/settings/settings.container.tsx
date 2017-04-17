@@ -3,32 +3,38 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {BreadcrumbComponent} from '../common/breadcrumb.component';
 import {SettingsComponent} from './settings.component';
+import {SettingsState} from "./settings.state";
 
-export const SettingsContainer = (props) => {
+interface Props {
+	routes: any,
+	settings: SettingsState
+}
 
-  return (
-    <div>
-      <BreadcrumbComponent routes={props.routes}/>
+export const SettingsContainer = (props: Props) => {
 
-      <SettingsComponent settings={props.settings}/>
-    </div>
-  );
+	return (
+		<div>
+			<BreadcrumbComponent routes={props.routes}/>
+
+			<SettingsComponent settings={props.settings}/>
+		</div>
+	);
 };
 
 function mapStateToProps(state, ownProps) {
-  return {
-    routes: ownProps.routes,
-    settings: state.settings
-  };
+	return {
+		routes: ownProps.routes,
+		settings: state.settings
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({}, dispatch)
-  };
+	return {
+		actions: bindActionCreators({}, dispatch)
+	};
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(SettingsContainer);
