@@ -1,6 +1,6 @@
 import * as actionTypes from './cf-instances.action-types';
 import * as actions from './cf-instances.actions';
-import {CfInstance, Instance} from "./cf-instances.state";
+import {CfInstances, Instance} from "./cf-instances.state";
 import {Token} from "../../cloud/user/token.interface";
 
 describe('CF instances actions', () => {
@@ -10,9 +10,9 @@ describe('CF instances actions', () => {
 	});
 
 	it('should update the cf instances', () => {
-		const instances = {};
+		const cfInstances = {};
 
-		actions.updateCfInstances(instances).should.eql({type: actionTypes.UPDATE_CF_INSTANCES, instances});
+		actions.updateCfInstances(cfInstances).should.eql({type: actionTypes.UPDATE_CF_INSTANCES, cfInstances});
 	});
 
 	it('should alert the user that fetch the cf instances failed', () => {
@@ -20,21 +20,21 @@ describe('CF instances actions', () => {
 	});
 
 	it('should request that a new cf instance be added', () => {
-		const cfInstance = 'lab.run.io';
+		const cfInstanceUrl = 'lab.run.io';
 		const username = 'username';
 		const password = 'password';
-		actions.requestAddInstance(cfInstance, username, password).should.eql({
+		actions.requestAddInstance(cfInstanceUrl, username, password).should.eql({
 			type: actionTypes.REQUEST_ADD_INSTANCE,
-			cfInstance,
+			cfInstanceUrl,
 			username,
 			password
 		});
 	});
 
 	it('should add a new cf instance', () => {
-		const instance = {'lab.run.io': {isLoggedIn: true, cfInstance: 'lab.run.io', token: {} as Token}} as CfInstance;
+		const cfInstance = {'lab.run.io': {isLoggedIn: true, cfInstance: 'lab.run.io', token: {} as Token}} as CfInstances;
 
-		actions.addCfInstance(instance).should.eql({type: actionTypes.ADD_CF_INSTANCE, instance});
+		actions.addCfInstance(cfInstance).should.eql({type: actionTypes.ADD_CF_INSTANCE, cfInstance});
 	});
 
 	it('should alert the user that adding a new cf instance failed', () => {

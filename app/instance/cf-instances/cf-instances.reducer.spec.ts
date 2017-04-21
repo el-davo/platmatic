@@ -15,7 +15,7 @@ describe('CF instances reducer', () => {
 	it('should update the cf instances', () => {
 		const action = {
 			type: actionTypes.UPDATE_CF_INSTANCES,
-			instances: {
+			cfInstances: {
 				'lab.run.io1': {
 					cfInstance: 'lab.run.io1',
 					isLoggedIn: true,
@@ -69,7 +69,7 @@ describe('CF instances reducer', () => {
 	it('should request that a new cf instance be added', () => {
 		const action = {
 			type: actionTypes.REQUEST_ADD_INSTANCE,
-			cfInstance: 'lab.run.io',
+			cfInstanceUrl: 'lab.run.io',
 			username: 'user',
 			password: 'pass'
 		};
@@ -81,7 +81,7 @@ describe('CF instances reducer', () => {
 	it('should add a new cf instance to the list', () => {
 		const action = {
 			type: actionTypes.ADD_CF_INSTANCE,
-			instance: {'lab.run.io2': {cfInstance: 'lab.run.io2', isLoggedIn: true, token: {} as Token}}
+			cfInstances: {'lab.run.io2': {cfInstance: 'lab.run.io2', isLoggedIn: true, token: {} as Token}}
 		};
 		const state = {
 			...cfInstances, isAddingNewCfInstance: true, instances: {
@@ -114,5 +114,34 @@ describe('CF instances reducer', () => {
 		const state = {...cfInstances, isAddingNewCfInstance: true} as CfInstancesState;
 
 		cfInstancesReducer(state, action).should.eql({...state, isAddingNewCfInstance: false} as CfInstancesState);
+	});
+
+	it('should request that a cf instance be deleted', () => {
+		const action = {type: actionTypes.REQUEST_DELETE_CF_INSTANCE};
+		const state = {...cfInstances, isDeletingCfInstance: false} as CfInstancesState;
+
+		cfInstancesReducer(state, action).should.eql({...state, isDeletingCfInstance: true});
+	});
+
+	it('should delete a cf instance and inform the user', () => {
+		const action = {type: actionTypes.DELETE_CF_INSTANCE, instance: {cfInstance: 'lab.run.io1'} as Instance};
+		const state = {
+			...cfInstances,
+			isDeletingCfInstance: true,
+			instances: {'lab.run.io': {} as Instance, 'lab.run.io1': {} as Instance}
+		} as CfInstancesState;
+
+		cfInstancesReducer(state, action).should.eql({
+			...state,
+			isDeletingCfInstance: false,
+			instances: {'lab.run.io': {} as Instance}
+		} as CfInstancesState);
+	});
+
+	it('should inform the user that deleting the cf instance has failed', () => {
+		const action = {type: actionTypes.DELETE_CF_INSTANCE_FAILED};
+		const state = {...cfInstances, isDeletingCfInstance: true} as CfInstancesState;
+
+		cfInstancesReducer(state, action).should.eql({...state, isDeletingCfInstance: false} as CfInstancesState);
 	});
 });

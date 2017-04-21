@@ -4,6 +4,7 @@ export const cfInstances = {
 	showAddCfInstanceModal: false,
 	isLoadingCfInstances: false,
 	isAddingNewCfInstance: false,
+	isDeletingCfInstance: false,
 	instances: {}
 } as CfInstancesState;
 
@@ -11,10 +12,11 @@ export interface CfInstancesState {
 	showAddCfInstanceModal: boolean;
 	isLoadingCfInstances: boolean;
 	isAddingNewCfInstance: boolean;
-	instances: CfInstance
+	isDeletingCfInstance: boolean;
+	instances: CfInstances
 }
 
-export interface CfInstance {
+export interface CfInstances {
 	[key: string]: Instance
 }
 
